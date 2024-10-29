@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock  %}
+
+{% block content %}
+    <h1>Login</h1>
+
+    {% if form.errors %}
+        <p>
+            Your username and password did'nt match
+            please try again
+        </p>
+
+        {% else %}
+        <p>Please, use the following form to Login</p>
+    {% endif %}
+
+    <div class="login-form">
+        <form action="{% url 'login' %}" method="post">
+            {{form.as_p}}
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{next}}" />  <!-- the hidden form captures the URL a user intended to visit before being redirected to the login page, allowing Django to redirect them back to that specific page after a successful login.-->
+            <p>
+                <input type="submit" value="Login"/>
+            </p>
+        </form>
+    </div>
+
+{% endblock  %}
