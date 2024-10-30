@@ -18,4 +18,5 @@ urlpatterns = [
         auth_views.PasswordChangeDoneView.as_view(),
         name="change_password_done",
     ),
+    path("edit/", views.edit, name="edit"),
 ]

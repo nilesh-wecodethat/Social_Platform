@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Edit your details{% endblock %}
+
+{% block content %}
+    <h1>Edit your account details</h1>
+    <p>you can edit your account details using the form below</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {{user_form.as_p}}
+        {{profile_form.as_p}}
+        {% csrf_token %}
+
+        <p>
+            <input type="submit"  value="Save changes"/>
+        </p>
+    </form>
+{% endblock %}
