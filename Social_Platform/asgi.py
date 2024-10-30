@@ -1,5 +1,5 @@
 """
-ASGI config for bookmarks project.
+ASGI config for Social_Platform project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bookmarks.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Social_Platform.settings")
 
 application = get_asgi_application()
