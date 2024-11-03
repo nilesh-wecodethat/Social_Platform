@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -16,6 +17,9 @@ class Image(models.Model):
     user_like = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="images_liked", blank=True
     )
+
+    def get_absolute_url(self):
+        return reverse("images:detail", args=[self.id, self.slug])
 
     def __str__(self):
         return self.title
