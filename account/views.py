@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from account.forms import LoginForm, ProfileEditForm, UserEditForm, UserRegistrationForm
+from actions.models import Action
+from actions.utils import create_action
 from common.decorators import ajax_required
 
 from .models import Contact
@@ -41,7 +43,16 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
-    return render(request, "account/dashboard.html", {"section": "dashboard"})
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list("id", flat=True)
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+        actions = actions.select_related("user", "user__profile").prefetch_related(
+            "target"
+        )[:10]
+    return render(
+        request, "account/dashboard.html", {"section": "dashboard", "actions": actions}
+    )
 
 
 def register(request):
@@ -53,6 +64,7 @@ def register(request):
                 user_form.cleaned_data["password"]
             )  # set_password handle the hashing
             new_user.save()
+            create_action(new_user, "has created an account")
             return render(request, "account/register_done.html", {"new_user": new_user})
     else:
         user_form = UserRegistrationForm()
