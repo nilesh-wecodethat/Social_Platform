@@ -3,9 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from account.forms import LoginForm, UserRegistrationForm
 from account.forms import LoginForm, ProfileEditForm, UserEditForm, UserRegistrationForm
-
 
 def user_login(request):
     if request.method == "POST":
@@ -53,7 +52,6 @@ def register(request):
         user_form = UserRegistrationForm()
 
     return render(request, "account/register.html", {"user_form": user_form})
-
 
 @login_required
 def edit(request):

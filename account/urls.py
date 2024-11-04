@@ -19,6 +19,7 @@ urlpatterns = [
         auth_views.PasswordChangeDoneView.as_view(),
         name="change_password_done",
     ),
+    path("register/", views.register, name="register"),
     path(
         "password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
     ),
