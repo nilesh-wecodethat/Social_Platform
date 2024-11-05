@@ -5,14 +5,15 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-
+from django.http import HttpResponse
+from django.shortcuts import render
+from account.forms import LoginForm, UserRegistrationForm
 from account.forms import LoginForm, ProfileEditForm, UserEditForm, UserRegistrationForm
 from actions.models import Action
 from actions.utils import create_action
 from common.decorators import ajax_required
 
 from .models import Contact
-
 
 def user_login(request):
     if request.method == "POST":
@@ -70,7 +71,6 @@ def register(request):
         user_form = UserRegistrationForm()
 
     return render(request, "account/register.html", {"user_form": user_form})
-
 
 @login_required
 def edit(request):
